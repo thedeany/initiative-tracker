@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100vh;
+  background: linear-gradient(40deg, #43bfee 23%, #a6e7ff 58%, #43bfee);
+}
+
+.App {
+    width: 20em;
+    margin: 1em auto;
+    padding: 2em;
+    background: rgba(225, 247, 255, 0.29);
+    box-shadow: rgba(106, 208, 246, 0.53) 0px 4px 7px 2px;
+    border-radius: 5px;
+}
+
+.initiative-list {
+  margin-top: 2em;
+}
+
+.list-item {
+    display: flex;
+    margin: 1em 0em;
+    cursor: pointer;
+}
+
+.list-item > * {
+    flex: 1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group > * {
+  flex: 1;
+}
+
+input {
+  text-align: center;
+}
+
+input[type="submit"], label {
+  margin-top: 1em;
+}
