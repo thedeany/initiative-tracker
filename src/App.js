@@ -77,40 +77,45 @@ class App extends Component {
   render() {
     const { name, initiative, characters } = this.state
     return (
-      <div className="App">
-        <AddForm
-          name={name}
-          initiative={initiative}
-          onChange={this.onChange.bind(this)}
-          submit={this.handleSubmit.bind(this)}
-          inputRef={el => this.nameInput = el}
-        />
-        { characters.length
-          ?
-          <div className="initiative-list">
-            {
-              characters.sort((a, b) => {
-                return b.initiative - a.initiative
-              }).map((character, index) => {
-                return <ListItem
-                  key={index}
-                  name={character.name}
-                  initiative={character.initiative}
-                  onClick={this.editItem.bind(this)}
-                />
-              })
-            }
-          </div>
-          :
-          null
-        }
-        {
-          characters.length
-          ?
-          <input type="button" value="Reset" onClick={this.resetList.bind(this)} />
-          :
-          null
-        }
+      <div className="container">
+        <div className="App">
+          <AddForm
+            name={name}
+            initiative={initiative}
+            onChange={this.onChange.bind(this)}
+            submit={this.handleSubmit.bind(this)}
+            inputRef={el => this.nameInput = el}
+          />
+          { characters.length
+            ?
+            <div className="initiative-list">
+              {
+                characters.sort((a, b) => {
+                  return b.initiative - a.initiative
+                }).map((character, index) => {
+                  return <ListItem
+                    key={index}
+                    name={character.name}
+                    initiative={character.initiative}
+                    onClick={this.editItem.bind(this)}
+                  />
+                })
+              }
+            </div>
+            :
+            null
+          }
+          {
+            characters.length
+            ?
+            <input type="button" value="Reset" onClick={this.resetList.bind(this)} />
+            :
+            null
+          }
+        </div>
+        <div className="footer">
+          <a href="https://github.com/thedeany">Github</a>
+        </div>
       </div>
     );
   }
