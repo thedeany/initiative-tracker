@@ -114,7 +114,7 @@ class App extends Component {
           }
         </div>
         <div className="footer">
-          <a href="https://github.com/thedeany">Github</a>
+          <a href="https://github.com/thedeany/initiative-tracker">Github</a>
         </div>
       </div>
     );
