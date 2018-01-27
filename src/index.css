@@ -3,7 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
   height: 100vh;
-  background: linear-gradient(40deg, #43bfee 23%, #a6e7ff 58%, #43bfee);
+  background: linear-gradient(40deg, rgb(185, 58, 58) 23%, rgb(240, 125, 125) 58%, rgb(185, 58, 58))
 }
 
 .App {
@@ -11,7 +11,7 @@ body {
     margin: 1em auto;
     padding: 2em;
     background: rgba(225, 247, 255, 0.29);
-    box-shadow: rgba(106, 208, 246, 0.53) 0px 4px 7px 2px;
+    box-shadow: rgba(185, 58, 58, 0.28) 0px 4px 7px 2px;
     border-radius: 5px;
 }
 
@@ -36,6 +36,19 @@ body {
 
 .form-group > * {
   flex: 1;
+}
+
+.form-group > input {
+    width: 15em;
+    margin: 0.4em auto;
+    border: none;
+    border-radius: 1em;
+    box-shadow: black 0px 0px 2px 0px;
+}
+
+.form-group > input:focus {
+    outline: none;
+    box-shadow: #8fe5ff 0px 0px 5px 3px;
 }
 
 input {
