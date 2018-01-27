@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   setInputFocus() {
-    document.querySelector('#name').focus()
+    this.nameInput.focus()
   }
 
   onChange(e) {
@@ -83,6 +83,7 @@ class App extends Component {
           initiative={initiative}
           onChange={this.onChange.bind(this)}
           submit={this.handleSubmit.bind(this)}
+          inputRef={el => this.nameInput = el}
         />
         { characters.length
           ?

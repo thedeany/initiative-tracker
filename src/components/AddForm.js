@@ -12,6 +12,7 @@ class AddForm extends Component {
             id="name"
             onChange={this.props.onChange.bind(this)}
             value={this.props.name}
+            ref={this.props.inputRef}
           />
         </div>
         <div className="form-group">
