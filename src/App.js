@@ -12,9 +12,11 @@ class App extends Component {
   }
   componentWillMount() {
     const characters = getLocalStorage()
-    this.setState({
-      characters
-    })
+    if (characters) {
+      this.setState({
+        characters
+      })
+    }
   }
 
   setInputFocus() {
@@ -82,20 +84,25 @@ class App extends Component {
           onChange={this.onChange.bind(this)}
           submit={this.handleSubmit.bind(this)}
         />
-        <div className="initiative-list">
-          {
-            characters.sort((a, b) => {
-              return b.initiative - a.initiative
-            }).map((character, index) => {
-              return <ListItem
-                key={index}
-                name={character.name}
-                initiative={character.initiative}
-                onClick={this.editItem.bind(this)}
-              />
-            })
-          }
-        </div>
+        { characters.length
+          ?
+          <div className="initiative-list">
+            {
+              characters.sort((a, b) => {
+                return b.initiative - a.initiative
+              }).map((character, index) => {
+                return <ListItem
+                  key={index}
+                  name={character.name}
+                  initiative={character.initiative}
+                  onClick={this.editItem.bind(this)}
+                />
+              })
+            }
+          </div>
+          :
+          null
+        }
         {
           characters.length
           ?
