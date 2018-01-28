@@ -18,7 +18,7 @@ class AddForm extends Component {
         <div className="form-group">
           <label htmlFor="initiative">Initiative</label>
           <input
-            type="text"
+            type="number"
             name="initiative"
             id="initiative"
             onChange={this.props.onChange.bind(this)}
