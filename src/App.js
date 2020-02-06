@@ -1,124 +1,113 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ListItem from './components/ListItem';
 import AddForm from './components/AddForm';
-import { getLocalStorage, setLocalStorage } from './utilities/helpers'
+import { getLocalStorage, setLocalStorage } from './utilities/helpers';
 import './App.css';
 
-class App extends Component {
-  state = {
-    name: '',
-    initiative: undefined,
-    characters: [],
-  }
-  componentWillMount() {
-    const characters = getLocalStorage()
-    if (characters) {
-      this.setState({
-        characters
-      })
+const App = props => {
+  const [name, setName] = useState('');
+  const [initiative, setInitiative] = useState(undefined);
+  const [characters, setCharacters] = useState([]);
+
+  const nameInput = useRef(null);
+
+  useEffect(() => {
+    const storedCharacters = getLocalStorage();
+    if (storedCharacters) setCharacters(storedCharacters);
+  }, []);
+
+  useEffect(
+    () => {
+      setLocalStorage(characters);
+    },
+    [characters]
+  );
+
+  const setInputFocus = () => {
+    nameInput.current.focus();
+  };
+
+  const onChange = e => {
+    const { name: inputName, value } = e.target;
+    console.log(inputName, value);
+    switch (inputName) {
+      case 'name':
+        setName(value);
+        break;
+      case 'initiative':
+        setInitiative(value);
+        break;
+      default:
+        break;
     }
-  }
+  };
 
-  setInputFocus() {
-    this.nameInput.focus()
-  }
-
-  onChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
+  const handleSubmit = e => {
+    e.preventDefault();
 
     const character = {
-      'name': this.state.name,
-      'initiative': this.state.initiative
-    }
-
-    if (character.name && character.initiative) {
-      this.setState({
-        name: '',
-        initiative: undefined,
-        characters: [
-          ...this.state.characters,
-          character
-        ]
-      }, () => {
-        setLocalStorage(this.state.characters)
-        this.setInputFocus()
-      })
-    }
-  }
-
-  editItem(name, initiative) {
-    const characters = this.state.characters.filter(character => {
-      return character.name !== name && character.initiative !== initiative
-    })
-
-    this.setState({
       name,
       initiative,
-      characters
-    })
+    };
 
-    this.setInputFocus()
-  }
+    if (character.name && character.initiative) {
+      setCharacters(prevState => [...prevState, character]);
+      setName('');
+      setInitiative(undefined);
+      setInputFocus();
+    }
+  };
 
-  resetList() {
-    this.setState({
-      characters: []
-    }, () => {
-      setLocalStorage(this.state.characters)
-    })
-  }
-
-  render() {
-    const { name, initiative, characters } = this.state
-    return (
-      <div className="container">
-        <div className="App">
-          <AddForm
-            name={name}
-            initiative={initiative}
-            onChange={this.onChange.bind(this)}
-            submit={this.handleSubmit.bind(this)}
-            inputRef={el => this.nameInput = el}
-          />
-          { characters.length
-            ?
-            <div className="initiative-list">
-              {
-                characters.sort((a, b) => {
-                  return b.initiative - a.initiative
-                }).map((character, index) => {
-                  return <ListItem
-                    key={index}
-                    name={character.name}
-                    initiative={character.initiative}
-                    onClick={this.editItem.bind(this)}
-                  />
-                })
-              }
-            </div>
-            :
-            null
-          }
-          {
-            characters.length
-            ?
-            <input type="button" value="Reset" onClick={this.resetList.bind(this)} />
-            :
-            null
-          }
-        </div>
-        <div className="footer">
-          <a href="https://github.com/thedeany/initiative-tracker">Github</a>
-        </div>
-      </div>
+  const editItem = (editName, editInitiative) => {
+    const charactersList = characters.filter(
+      character =>
+        character.name !== editName && character.initiative !== editInitiative
     );
-  }
-}
+
+    setName(editName);
+    setInitiative(editInitiative);
+    setCharacters(charactersList);
+
+    setInputFocus();
+  };
+
+  return (
+    <div className="container">
+      <div className="App">
+        <AddForm
+          name={name}
+          initiative={initiative}
+          onChange={onChange}
+          submit={handleSubmit}
+          inputRef={nameInput}
+        />
+        {characters.length ? (
+          <div className="initiative-list">
+            {characters
+              .sort((a, b) => b.initiative - a.initiative)
+              .map((character, index) => (
+                <ListItem
+                  key={index}
+                  name={character.name}
+                  initiative={character.initiative}
+                  onClick={editItem}
+                />
+              ))}
+          </div>
+        ) : null}
+        {characters.length ? (
+          <input
+            type="button"
+            value="Reset"
+            onClick={() => setCharacters([])}
+          />
+        ) : null}
+      </div>
+      <div className="footer">
+        <a href="https://github.com/thedeany/initiative-tracker">Github</a>
+      </div>
+    </div>
+  );
+};
 
 export default App;

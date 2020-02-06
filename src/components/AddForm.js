@@ -1,39 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class AddForm extends Component {
-  render() {
-    return (
-      <form className="add-form">
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            onChange={this.props.onChange.bind(this)}
-            value={this.props.name}
-            ref={this.props.inputRef}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="initiative">Initiative</label>
-          <input
-            type="number"
-            name="initiative"
-            id="initiative"
-            onChange={this.props.onChange.bind(this)}
-            value={this.props.initiative || ''}
-          />
-        </div>
+const AddForm = props => {
+  const { name, initiative, onChange, inputRef, submit } = props;
+  return (
+    <form className="add-form">
+      <div className="form-group">
+        <label htmlFor="name">Name</label>
         <input
-          type="submit"
-          value="Add"
-          disabled={!(this.props.name && this.props.initiative)}
-          onClick={this.props.submit.bind(this)}
+          type="text"
+          name="name"
+          id="name"
+          onChange={onChange}
+          value={name}
+          ref={inputRef}
         />
-      </form>
-    );
-  }
-}
+      </div>
+      <div className="form-group">
+        <label htmlFor="initiative">Initiative</label>
+        <input
+          type="number"
+          name="initiative"
+          id="initiative"
+          onChange={onChange}
+          value={initiative || ''}
+        />
+      </div>
+      <input
+        type="submit"
+        value="Add"
+        disabled={!(name && initiative)}
+        onClick={submit}
+      />
+    </form>
+  );
+};
 
 export default AddForm;
